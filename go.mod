@@ -3,7 +3,7 @@ module github.com/aquasecurity/trivy-checks
 go 1.23.4
 
 require (
-	github.com/aquasecurity/trivy v0.58.1-0.20250109050215-f9a6a7192722
+	github.com/aquasecurity/trivy v0.58.1-0.20250111034400-243e5a3af99e
 	github.com/aws-cloudformation/rain v1.21.0
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/liamg/iamgo v0.0.9
