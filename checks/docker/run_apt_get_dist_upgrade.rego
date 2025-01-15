@@ -6,6 +6,7 @@
 # - input: schema["dockerfile"]
 # custom:
 #   id: DS024
+#   deprecated: true
 #   avd_id: AVD-DS-0024
 #   severity: HIGH
 #   short_code: no-dist-upgrade
@@ -15,14 +16,16 @@
 #     - type: dockerfile
 package builtin.dockerfile.DS024
 
+import rego.v1
+
 import data.lib.docker
 
-get_apt_get_dist_upgrade[run] {
+get_apt_get_dist_upgrade contains run if {
 	run := docker.run[_]
 	regex.match(`apt-get .* dist-upgrade`, run.Value[0])
 }
 
-deny[res] {
+deny contains res if {
 	cmd := get_apt_get_dist_upgrade[_]
 	msg := "'apt-get dist-upgrade' should not be used in Dockerfile"
 	res := result.new(msg, cmd)

@@ -24,19 +24,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Regal 
+        uses: StyraInc/setup-regal@33a142b1189004e0f14bf42b15972c67eecce776 # v1
+        with:
+          version: 0.29
+
+      - name: Lint Rego
+        run: make lint-rego
+
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Setup OPA
-        uses: ./.github/actions/setup-opa
+      - name: Rego Check
+        run: go run ./cmd/opa check lib checks --v0-v1
 
       - name: OPA Format
         run: |
-          files=$(opa fmt --list . | grep -v vendor || true)
-          if [ -n "$files" ]; then
-            echo "=== The following files are not formatted ==="
-            echo "$files"
+          make fmt-rego
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Run 'make fmt-rego' and push it"
             exit 1
           fi
 
