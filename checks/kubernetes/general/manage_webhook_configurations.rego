@@ -9,7 +9,7 @@
 # custom:
 #   id: KSV114
 #   avd_id: AVD-KSV-0114
-#   severity: Critical
+#   severity: CRITICAL
 #   short_code: no-manage-webhook
 #   recommended_actions: "Remove webhook configuration resouces/verbs, acceptable values for verbs ['get', 'list', 'watch']"
 #   input:
@@ -23,7 +23,6 @@ package builtin.kubernetes.KSV114
 import rego.v1
 
 import data.lib.kubernetes
-import data.lib.utils
 
 readVerbs := ["create", "update", "patch", "delete", "deletecollection", "impersonate", "*"]
 

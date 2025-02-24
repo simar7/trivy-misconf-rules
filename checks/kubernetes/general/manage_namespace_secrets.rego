@@ -9,7 +9,7 @@
 # custom:
 #   id: KSV113
 #   avd_id: AVD-KSV-0113
-#   severity: Medium
+#   severity: MEDIUM
 #   short_code: no-manage-ns-secrets
 #   recommended_actions: "Manage namespace secrets are not allowed. Remove resource 'secrets' from role"
 #   input:
@@ -22,7 +22,6 @@ package builtin.kubernetes.KSV113
 import rego.v1
 
 import data.lib.kubernetes
-import data.lib.utils
 
 readVerbs := ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection", "impersonate", "*"]
 

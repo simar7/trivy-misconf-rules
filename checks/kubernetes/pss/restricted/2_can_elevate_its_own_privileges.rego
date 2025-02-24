@@ -25,12 +25,12 @@
 #         - kind: daemonset
 #         - kind: cronjob
 #         - kind: job
+#   examples: checks/kubernetes/pss/restricted/2_can_elevate_its_own_privileges.yaml
 package builtin.kubernetes.KSV001
 
 import rego.v1
 
 import data.lib.kubernetes
-import data.lib.utils
 
 default checkAllowPrivilegeEscalation := false
 

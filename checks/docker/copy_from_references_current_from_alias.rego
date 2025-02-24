@@ -15,6 +15,7 @@
 #   input:
 #     selector:
 #     - type: dockerfile
+#   examples: checks/docker/copy_from_references_current_from_alias.yaml
 package builtin.dockerfile.DS006
 
 import rego.v1
@@ -44,7 +45,7 @@ is_alias_current_from_alias(current_name, current_alias) := allow if {
 	#expecting stage name as "myimage:tag as dep"
 	[_, alias] := regex.split(`\s+as\s+`, current_name_lower)
 
-	alias == current_alias
+	alias == current_alias_lower
 
 	allow = true
 }

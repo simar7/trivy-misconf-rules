@@ -15,12 +15,12 @@
 #   input:
 #     selector:
 #     - type: kubernetes
+#   examples: checks/kubernetes/advanced/selector_usage_in_network_policies.yaml
 package builtin.kubernetes.KSV038
 
 import rego.v1
 
 import data.lib.kubernetes
-import data.lib.utils
 
 hasSelector(spec) if {
 	kubernetes.has_field(spec, "podSelector")
@@ -61,12 +61,12 @@ hasSelector(spec) if {
 
 hasSelector(spec) if {
 	kubernetes.spec.podSelector == {}
-	"Egress" in input.spec.policyType
+	"Egress" in spec.policyType
 }
 
 hasSelector(spec) if {
 	kubernetes.spec.podSelector == {}
-	"Ingress" in input.spec.policyType
+	"Ingress" in spec.policyType
 }
 
 deny contains res if {

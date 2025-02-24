@@ -1,5 +1,5 @@
 # METADATA
-# title: Public egress should not be allowed via network policies
+# title: A network policy should not allow unrestricted egress to any IP address.
 # description: You should not expose infrastructure to the public internet except where explicitly required
 # scope: package
 # schemas:
@@ -22,17 +22,20 @@
 #     good_examples: checks/kubernetes/network/no_public_egress.yaml
 #     links:
 #       - https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/network_policy#spec.egress.to.ip_block.cidr
+#   examples: checks/kubernetes/network/no_public_egress.yaml
 package builtin.kube.network.kube0002
 
 import rego.v1
+
+import data.lib.net
 
 deny contains res if {
 	some policy in input.kubernetes.networkpolicies
 	isManaged(policy)
 	some dest in policy.spec.egress.destinationcidrs
-	cidr.is_public(dest.value)
+	net.cidr_allows_all_ips(dest.value)
 	res := result.new(
-		"Network policy allows egress to the public internet.",
+		"Network policy allows unrestricted egress to any IP address.",
 		dest,
 	)
 }

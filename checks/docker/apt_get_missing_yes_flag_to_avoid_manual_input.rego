@@ -7,7 +7,6 @@
 # schemas:
 # - input: schema["dockerfile"]
 # custom:
-#   schema_version: 1
 #   id: DS021
 #   avd_id: AVD-DS-0021
 #   severity: HIGH
@@ -16,6 +15,7 @@
 #   input:
 #     selector:
 #     - type: dockerfile
+#   examples: checks/docker/apt_get_missing_yes_flag_to_avoid_manual_input.yaml
 package builtin.dockerfile.DS021
 
 import rego.v1

@@ -3,7 +3,6 @@ package builtin.google.compute.google0035_test
 import rego.v1
 
 import data.builtin.google.compute.google0035 as check
-import data.lib.test
 
 test_deny_egress_rule_with_multiple_public_destinations if {
 	inp := {"google": {"compute": {"networks": [{"firewall": {"egressrules": [{
@@ -21,7 +20,7 @@ test_deny_egress_rule_with_multiple_public_destinations if {
 	count(res) == 1
 }
 
-test_allow_egress_rule_with_public_destination if {
+test_allow_egress_rule_with_private_destination if {
 	inp := {"google": {"compute": {"networks": [{"firewall": {"egressrules": [{
 		"firewallrule": {
 			"isallow": {"value": true},

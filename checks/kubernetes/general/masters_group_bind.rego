@@ -1,17 +1,17 @@
 # METADATA
-# title: "system:authenticate group access binding"
-# description: "Binding to system:authenticate group to any clusterrole or role is a security risk."
+# title: "system:masters group access binding"
+# description: "Binding to system:masters group to any clusterrole or role is a security risk."
 # scope: package
 # schemas:
 # - input: schema["kubernetes"]
 # related_resources:
-# - https://orca.security/resources/blog/sys-all-google-kubernetes-engine-risk/
+# - https://www.aquasec.com/blog/kubernetes-authorization/
 # custom:
-#   id: KSV01011
+#   id: KSV0123
 #   avd_id: AVD-KSV-0123
 #   severity: CRITICAL
-#   short_code: no-system-authenticated-group-bind
-#   recommended_action: "Remove system:authenticated group binding from clusterrolebinding or rolebinding."
+#   short_code: no-system-masters-group-bind
+#   recommended_action: "Remove system:masters group binding from clusterrolebinding or rolebinding."
 #   input:
 #     selector:
 #     - type: kubernetes
@@ -23,20 +23,17 @@ package appshield.kubernetes.KSV0123
 
 import rego.v1
 
-import data.k8s
 import data.lib.kubernetes
 
-readRoleRefs := ["system:masters"]
+readRoleRefs := {"system:masters"}
 
-readKinds := ["RoleBinding", "ClusterRolebinding"]
-
-mastersGroupBind(roleBinding) if {
-	kubernetes.kind == readKinds[_]
-	kubernetes.object.subjects[_].name == readRoleRefs[_]
+mastersGroupBind if {
+	kubernetes.is_role_binding_kind
+	kubernetes.object.subjects[_].name in readRoleRefs
 }
 
 deny contains res if {
-	mastersGroupBind(input)
+	mastersGroupBind
 	msg := kubernetes.format(sprintf("%s '%s' should not bind to roles %s", [kubernetes.kind, kubernetes.name, readRoleRefs]))
 	res := result.new(msg, input.metadata)
 }

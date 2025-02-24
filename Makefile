@@ -11,7 +11,7 @@ test-integration:
 	go test -v -timeout 5m -tags=integration ./integration/...
 
 .PHONY: rego
-rego: fmt-rego test-rego
+rego: fmt-rego check-rego lint-rego test-rego docs
 
 .PHONY: fmt-rego
 fmt-rego:
@@ -21,8 +21,12 @@ fmt-rego:
 test-rego:
 	go run ./cmd/opa test --explain=fails lib/ checks/ examples/ --ignore '*.yaml'
 
+.PHONY: check-rego
+check-rego:
+	@go run ./cmd/opa check lib checks --v0-v1 --strict
+
 .PHONY: lint-rego
-lint-rego:
+lint-rego: check-rego
 	@regal test .regal/rules 
 	@regal lint lib checks \
 		--config-file .regal/config.yaml \

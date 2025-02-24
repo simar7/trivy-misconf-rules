@@ -3,8 +3,6 @@ package defsec.kubernetes.KSV107
 import rego.v1
 
 import data.k8s
-import data.lib.kubernetes
-import data.lib.utils
 
 __rego_metadata__ := {
 	"id": "KSV107",
@@ -39,7 +37,7 @@ exists(obj, k) if {
 	_ = obj[k]
 }
 
-pick(k, obj1, obj2) := v if {
+pick(k, obj1, _) := v if {
 	v := obj1[k]
 }
 
@@ -86,7 +84,7 @@ compareVersion(obj) if {
 	valid(resultDep, resultRem)
 }
 
-compareVersion(obj) if {
+compareVersion(_) if {
 	not k8s
 }
 

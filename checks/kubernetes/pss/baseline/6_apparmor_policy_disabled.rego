@@ -9,7 +9,7 @@
 # custom:
 #   id: KSV002
 #   avd_id: AVD-KSV-0002
-#   severity: Low
+#   severity: LOW
 #   short_code: use-default-apparmor-profile
 #   recommended_action: "set the 'runtime/default' value from 'container.apparmor.security.beta.kubernetes.io'."
 #   input:
@@ -25,6 +25,7 @@
 #         - kind: daemonset
 #         - kind: cronjob
 #         - kind: job
+#   examples: checks/kubernetes/pss/baseline/6_apparmor_policy_disabled.yaml
 package builtin.kubernetes.KSV002
 
 import rego.v1

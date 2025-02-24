@@ -25,12 +25,12 @@
 #         - kind: daemonset
 #         - kind: cronjob
 #         - kind: job
+#   examples: checks/kubernetes/pss/restricted/5_runtime_default_seccomp_profile_not_set.yaml
 package builtin.kubernetes.KSV030
 
 import rego.v1
 
 import data.lib.kubernetes
-import data.lib.utils
 
 seccomp_pod_annotation_key := "seccomp.security.alpha.kubernetes.io/pod"
 
