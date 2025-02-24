@@ -58,13 +58,13 @@ docs-test:
 
 .PHONY: create-bundle
 create-bundle:
-	./scripts/bundle.sh
+	./cmd/bundle/bundle.sh
 
 .PHONY: verify-bundle
 verify-bundle:
-	cp $(BUNDLE_FILE) scripts/$(BUNDLE_FILE)
-	cd scripts && go run verify-bundle.go
-	rm scripts/$(BUNDLE_FILE)
+	cp $(BUNDLE_FILE) cmd/bundle/$(BUNDLE_FILE)
+	cd cmd/bundle && go run verify-bundle.go
+	rm cmd/bundle/$(BUNDLE_FILE)
 
 build-opa:
 	go build ./cmd/opa
